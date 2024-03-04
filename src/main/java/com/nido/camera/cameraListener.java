@@ -169,10 +169,11 @@ public class cameraListener implements Listener {
     }
 
     @EventHandler
-    public void onSpectate(PlayerStartSpectatingEntityEvent e){
-
-        CamPlayer p = (CamPlayer) e.getPlayer();
-        p.stopFollowing();
-
+    public void onSpectate(PlayerStartSpectatingEntityEvent e){    	
+    	CamPlayer camPlayer = plugin.getPlayer(e.getPlayer());    	
+    	
+    	if (camPlayer != null) {
+    		camPlayer.stopFollowing();
+    	}
     }
 }
