@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CamPlayer {
     private Track editing;
-    private Camera plugin = Camera.getInstance();
+    private CameraPlugin plugin = CameraPlugin.getInstance();
     private Player p;
     private CamPlayer following;
     private Location selection1;

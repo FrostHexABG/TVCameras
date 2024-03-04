@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.nido.camera.newCamCommand.plugin;
+import static com.nido.camera.CamCommand.plugin;
 
 public abstract class Utils {
 

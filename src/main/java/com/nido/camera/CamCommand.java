@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 
 
 @CommandAlias("camera|cam")
-public class newCamCommand extends BaseCommand {
+public class CamCommand extends BaseCommand {
 
-    static Camera plugin = Camera.getInstance();
+    public static CameraPlugin plugin = CameraPlugin.getInstance();
+    
     @HelpCommand
     public static void onHelp(CommandSender sender) {
         sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Cameras 1.0 help");
@@ -26,6 +27,7 @@ public class newCamCommand extends BaseCommand {
         sender.sendMessage(ChatColor.AQUA + "/camera stopfollow");
         sender.sendMessage(ChatColor.DARK_AQUA + "- You stop following a player");
     }
+    
     @CommandPermission("cameras.edit")
     @Subcommand("edit|e")
     public static void onEdit(Player player) {
@@ -38,10 +40,11 @@ public class newCamCommand extends BaseCommand {
             player.sendMessage(ChatColor.DARK_AQUA + "Stopped editing cameras.");
         }
     }
+    
     @CommandPermission("cameras.set")
     @Subcommand("set|s")
     @CommandCompletion("<index>, [label]")
-    public static void onCameraSet(Player player,  @Optional String index, @Optional String label) {
+    public static void onCameraSet(Player player, @Optional String index, @Optional String label) {
         CamPlayer camPlayer = plugin.getPlayer(player);
         if(camPlayer.isEditing()) {
             int regionIndex;
@@ -76,6 +79,7 @@ public class newCamCommand extends BaseCommand {
             player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Enter edit mode first!");
         }
     }
+    
     @CommandPermission("cameras.follow")
     @Subcommand("follow|f")
     @CommandCompletion("@players")
@@ -83,17 +87,28 @@ public class newCamCommand extends BaseCommand {
         plugin.getPlayer(followed.getPlayer()).addFollower(follower);
         follower.sendMessage(ChatColor.AQUA + "You're now following " + followed.getPlayer().getName());
     }
+    
     @CommandPermission("cameras.stopfollow")
     @Subcommand("stopfollow|sf")
     public static void onStopFollow(Player follower){
         plugin.getPlayer(follower).stopFollowing();
-        follower.sendMessage( ChatColor.DARK_AQUA + "You stopped following!");
+        follower.sendMessage(ChatColor.DARK_AQUA + "You stopped following!");
     }
-    //checks if index should be removed
+    
+    /**
+     * Checks if the index should be removed.
+     * @param index
+     * @return
+     */
     private static boolean getParsedRemoveFlag(String index) {
         return index.startsWith("-");
     }
-    //gives an index that should be added/removed
+    
+    /**
+     * Gives and index that should be added/removed.
+     * @param index
+     * @return
+     */
     private static Integer getParsedIndex(String index) {
         if (index.startsWith("-")) {
             index = index.substring(1);
@@ -106,6 +121,7 @@ public class newCamCommand extends BaseCommand {
             return null;
         }
     }
+    
     @CommandPermission("cameras.view")
     @Subcommand("view|v")
     @CommandCompletion("<index>")

@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import static com.nido.camera.newCamCommand.plugin;
+import static com.nido.camera.CamCommand.plugin;
 
 public class Cam {
 
@@ -20,7 +20,6 @@ public class Cam {
     private Integer id;
 
     public Cam(Location camloc, Track camTrack, int index, Vector min, Vector max, String label) {
-
         this.camlocation = camloc;
         this.camTrack = camTrack;
         this.index = index;
@@ -28,6 +27,7 @@ public class Cam {
         this.minp = min;
         this.maxp = max;
     }
+    
     public Cam(DbRow dbRow) {
         this.id = dbRow.getInt("ID");
         this.camlocation = Utils.stringToLocation(dbRow.get("CAMPOSITION"));
@@ -55,11 +55,15 @@ public class Cam {
     public Track getTrack() {
         return camTrack;
     }
-    public String getLabel() {return label;}
+    
+    public String getLabel() {
+    	return label;
+    }
 
     public int getIndex() {
         return index;
     }
+    
     public String getMinMax() {
         return minp.getBlockX() +
                 "," +
@@ -73,10 +77,12 @@ public class Cam {
                 "," +
                 maxp.getBlockZ();
     }
+    
     public boolean isInsideRegion(Player p) {
         Vector pLoc = p.getLocation().toVector();
         return pLoc.isInAABB(minp, maxp);
     }
+    
     public Integer getId() {
         return id;
     }
