@@ -1,11 +1,18 @@
 package com.nido.camera;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
-import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.HelpCommand;
+import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
+import me.makkuusen.timing.system.track.Track;
 
 
 @CommandAlias("camera|cam")
@@ -127,11 +134,14 @@ public class CamCommand extends BaseCommand {
     @CommandCompletion("<index>")
     public static void onViewCamera(Player player, int index){
         //checks if the index and the track actually exist
-        if(plugin.getCamera(Utils.getClosestTrack(player), index) != null) {
-            Cam camera = plugin.getCamera(Utils.getClosestTrack(player), index);
-            assert camera != null;
+    	Track closest = Utils.getClosestTrack(player);
+    	Cam camera = plugin.getCamera(closest, index);
+    	
+        if (camera != null) {            
             camera.tpPlayer(player);
-            player.sendMessage(ChatColor.AQUA + "Teleported to camera number " + index + " on track " + Utils.getClosestTrack(player).getDisplayName());
+            if (!player.hasPermission("cameras.view.hidemessages")) { // Issue #2
+            	player.sendMessage(ChatColor.AQUA + "Teleported to camera number " + index + " on track " + Utils.getClosestTrack(player).getDisplayName());
+            }
         }
     }
 

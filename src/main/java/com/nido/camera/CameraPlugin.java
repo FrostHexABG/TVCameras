@@ -3,6 +3,11 @@ package com.nido.camera;
 import co.aikar.commands.PaperCommandManager;
 import co.aikar.idb.*;
 import me.makkuusen.timing.system.track.Track;
+import net.kyori.adventure.audience.MessageType;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -151,8 +156,13 @@ public final class CameraPlugin extends JavaPlugin {
         p.sendMessage(ChatColor.AQUA + tracks.toString());
     }   
 
-    public void onQuit(Player player){
+    public void onQuit(Player player) {   	
         CamPlayer camPlayer = getPlayer(player);
+        if (camPlayer == null) {
+        	Bukkit.getConsoleSender().sendMessage(Component.text("[WARN] ").color(NamedTextColor.RED).append(Component.text("Caught null camPlayer in CameraPlugin#onQuit().")));
+        	return;
+        }
+        
         camPlayer.stopFollowing();
         
         List<Player> followers = new ArrayList<>(camPlayer.getFollowers());
