@@ -31,10 +31,16 @@ public class Cam {
     public Cam(DbRow dbRow) {
         this.id = dbRow.getInt("ID");
         this.camlocation = Utils.stringToLocation(dbRow.get("CAMPOSITION"));
-        this.camTrack = TrackDatabase.getTrackById(dbRow.getInt("TRACKID")).get();
+        var possibleTrack = TrackDatabase.getTrackById(dbRow.getInt("TRACKID"));
+        if (possibleTrack.isPresent()) {
+            this.camTrack = possibleTrack.get();
+        }
         this.index = dbRow.getInt("INDEX");
-        if(dbRow.getString("LABEL").contentEquals("null")) {this.label = null;}
-        else {this.label = dbRow.getString("LABEL");}
+        if (dbRow.getString("LABEL").contentEquals("null")) {
+            this.label = null;
+        } else {
+            this.label = dbRow.getString("LABEL");
+        }
         String MinMax = dbRow.getString("REGION");
         String[] MinAndMax = MinMax.split(":");
         this.minp = Utils.stringToVector(MinAndMax[0]);
