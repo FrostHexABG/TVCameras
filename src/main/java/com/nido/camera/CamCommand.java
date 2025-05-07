@@ -22,7 +22,7 @@ public class CamCommand extends BaseCommand {
     
     @HelpCommand
     public static void onHelp(CommandSender sender) {
-        sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Cameras 1.0 help");
+        sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Cameras " + CameraPlugin.getInstance().getDescription().getVersion() + " help");
         sender.sendMessage(ChatColor.AQUA + "/camera edit");
         sender.sendMessage(ChatColor.DARK_AQUA + "- Enter edit mode for the track you are currently on");
         sender.sendMessage(ChatColor.AQUA + "/camera set [index]");

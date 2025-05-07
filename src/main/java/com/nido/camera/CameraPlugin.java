@@ -3,7 +3,6 @@ package com.nido.camera;
 import co.aikar.commands.PaperCommandManager;
 import co.aikar.idb.*;
 import me.makkuusen.timing.system.track.Track;
-import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
